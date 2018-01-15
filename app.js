@@ -17,8 +17,14 @@ app.use(router)
 
 const address = '0xaaee35c0dd8e475f0346d28f0fd30a2999ff6e80'
 
+if (process.env.JAWSDB_URL) {
+  url = process.env.JAWSDB_URL
+} else {
+  url = '127.0.0.1'
+}
+
 var db = mysql.createConnection({
-  host: '127.0.0.1',
+  host: url,
   user: 'root',
   password: '',
   database: 'mining'
