@@ -1,0 +1,75 @@
+<html ng-app="miner-dashboard">
+<head>
+  <title>Miner Dashboard</title>
+  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/css/bootstrap.min.css" rel="stylesheet">
+  <link href="style.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/britecharts/dist/css/britecharts.min.css" type="text/css" />
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+  <script src="http://code.angularjs.org/1.0.7/angular.js"></script>
+  <script src="https://code.highcharts.com/highcharts.js"></script>
+  <script src="https://code.highcharts.com/modules/exporting.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.20.1/moment.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-moment/1.2.0/angular-moment.min.js"></script>
+  <script src="script.js"></script>
+
+</head>
+<body ng-controller="MinerDashboardController">
+  <div id="barContainer" style="min-width: 310px; max-width: 800px; height: 120px;"></div>
+  <div id="address-link"><a href="https://eth.nanopool.org/account/0xaaee35c0dd8e475f0346d28f0fd30a2999ff6e80" target="_blank">https://eth.nanopool.org/account/{{ minerAddress }}</a></div>
+  <div id="conversion-rate-container">
+    <h3>Current ETH to USD:</h3>
+    <span id="conversion-rate" ng-show="conversionRate">${{ conversionRate }}</span>
+  </div>
+
+  <table id="worker-table" style="display: inline-block;vertical-align: top;margin: 20px;">
+    <tr class="header-row">
+      <th>Worker</th>
+      <th>Alive</th>
+      <th>Active</th>
+      <th>Uptime</th>
+      <th>Shares</th>
+    </tr>
+    <tr class="worker-data-row" ng-repeat="worker in workers | orderBy: '-total_shares'">
+      <td>{{ worker.name }}</td>
+      <td>{{ worker.hours_alive / 24 | number:2 }} days</td>
+      <td>{{ worker.hours_active / 24 | number:2 }} days</td>
+      <td>{{ ((worker.hours_active / 24) / (worker.hours_alive / 24)) * 100 | number:0 }}%</td>
+      <td>{{ worker.total_shares }}</td>
+    </tr>
+  </table>
+  <div id="pieContainer" style="width:380px;height:240px;display:inline-block;"></div>
+  <table id="earned-table">
+    <tr class="header-row">
+      <th>Worker</th>
+      <th>Total ETH</th>
+      <th>Total USD</th>
+      <th>ETH/day</th>
+      <th>USD/day</th>
+    </tr>
+    <tr class="worker-data-row" ng-repeat="worker in workers | orderBy: '-total_shares'">
+      <td>{{ worker.name }}</td>
+      <td>{{ worker.total_eth | number:5 }}</td>
+      <td>${{ worker.total_usd | number:2 }}</td>
+      <td>{{ worker.ethperday | number:5 }}</td>
+      <td>${{ worker.usdperday | number:2 }}</td>
+    </tr>
+  </table>
+
+  
+
+  <figure style="margin-left:30px;">
+    <pre>
+      <code>
+Estimated electricity bill increase due to mining is between $0.72 - $1.12 daily ($22 - $34 monthly)
+  400W average load, running ~20 hours a day = (400 * 20 / 1000) = ~8 kWh/day
+    $0.14/kWh power cost (MI) * 8 kWh = $1.12/day 
+    $0.11/kWh power cost (CO) * 8 kWh = $0.88/day
+    $0.09/kWh power cost (TX) * 8 kWh = $0.72/day
+      </code>
+    </pre>
+  </figure>
+    
+
+
+</body>
+</html>
