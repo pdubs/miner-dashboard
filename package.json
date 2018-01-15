@@ -18,5 +18,6 @@
   },
   "engines": {
     "node": "7.3.0"
-  }
+  },
+  "scripts": {"start": "cd db_sync; sh updateData.sh; node app.js"}
 }
