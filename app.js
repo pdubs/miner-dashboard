@@ -104,7 +104,7 @@ router.get('/workerrates/:workerId', function(req, res) {
   })
 })
 
-app.listen(7555, () => {
-  console.log('Server running on http://localhost:7555')
+app.listen(process.env.PORT, () => {
+  console.log('Server running!')
 })
 
