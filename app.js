@@ -1,3 +1,4 @@
+require('dotenv').config()
 const request = require('request')
 const rp = require('request-promise')
 const express = require('express')
@@ -17,18 +18,7 @@ app.use(router)
 
 const address = '0xaaee35c0dd8e475f0346d28f0fd30a2999ff6e80'
 
-if (process.env.JAWSDB_URL) {
-  var conn = process.env.JAWSDB_URL
-} else {
-  var conn = {
-    host: '127.0.0.1',
-    user: 'root',
-    password: '',
-    database: 'mining'
-  }
-}
-
-var db = mysql.createConnection(conn)
+var db = mysql.createConnection(process.env.JAWSDB_URL)
 
 var Miner={
   getMiner:function(callback){
