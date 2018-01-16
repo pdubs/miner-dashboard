@@ -1,9 +1,6 @@
+require('dotenv').config()
 module.exports = {
   client: 'mysql',
-  connection: {
-    user: 'root',
-    password: '',
-    database: 'mining'
-  },
+  connection: process.env.JAWSDB_URL,
   useNullAsDefault: true
 }

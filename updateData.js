@@ -1,4 +1,4 @@
-const knex = require('knex')(require('../knexfile'))
+const knex = require('knex')(require('./knexfile'))
 const request = require('request')
 const rp = require('request-promise')
 const Promise = require('bluebird');
